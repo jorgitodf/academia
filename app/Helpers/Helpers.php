@@ -18,6 +18,11 @@ class Helpers
         return preg_replace("/[^0-9]/", "", $telefone);
     }
 
+    public static function limpaCEP($cep)
+    {
+        return preg_replace("/[^0-9]/", "", $cep);
+    }
+
     public static function limpaTelefone($cpf)
     {
         $cpf = preg_replace("/[^0-9]/", "", $cpf);

@@ -17,6 +17,7 @@ class Phone extends Model
         return $this->belongsTo(User::class);
     }
 
+
     /* Mutators */
     public function setFixedAttribute($value)
     {

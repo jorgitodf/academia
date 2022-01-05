@@ -22,11 +22,11 @@ class CreateUsersTable extends Migration
 			$table->string('photo', 255);
             $table->string('email', 120);
             $table->string('password');
-            $table->unsignedInteger('type_users_id');
+            $table->unsignedInteger('type_user_id');
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('type_users_id', 'fk_type_users_users')->references('id')->on('type_users')->onUpdate('cascade');
+            $table->foreign('type_user_id', 'fk_type_users_users')->references('id')->on('type_users')->onUpdate('cascade');
         });
     }
 

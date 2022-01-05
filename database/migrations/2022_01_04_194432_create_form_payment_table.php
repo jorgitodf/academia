@@ -16,10 +16,7 @@ class CreateFormPaymentTable extends Migration
         Schema::create('form_payment', function (Blueprint $table) {
             $table->increments('id');
             $table->string('payment_method', 60);
-            $table->unsignedInteger('plans_id');
             $table->timestamps();
-
-            $table->foreign('plans_id', 'fk_plans_form_payment')->references('id')->on('plans')->onUpdate('cascade');
         });
     }
 

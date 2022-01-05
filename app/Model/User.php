@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'birth_date', 'profession', 'registration', 'cpf', 'gender', 'photo', 'email', 'password', 'type_users_id'
+        'name', 'birth_date', 'profession', 'registration', 'cpf', 'gender', 'photo', 'email', 'password', 'type_user_id'
     ];
 
     /**
@@ -47,6 +47,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Phone::class);
     }
+
+    public function adress()
+    {
+        return $this->hasOne(Adress::class);
+    }
+
 
     /* Mutators */
     public function setNameAttribute($value)

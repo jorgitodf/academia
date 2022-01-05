@@ -20,13 +20,13 @@ class CreateAdressesTable extends Migration
             $table->string('number', 10);
             $table->char('zip_code', 8);
             $table->unsignedInteger('neighborhoods_id');
-            $table->unsignedInteger('public_places_id');
-            $table->unsignedInteger('users_id');
+            $table->unsignedInteger('public_place_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
 
             $table->foreign('neighborhoods_id', 'fk_adresses_neighborhoods')->references('id')->on('neighborhoods')->onUpdate('cascade');
-            $table->foreign('public_places_id', 'fk_adresses_public_places')->references('id')->on('public_places')->onUpdate('cascade');
-            $table->foreign('users_id', 'fk_adresses_users')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('public_place_id', 'fk_adresses_public_places')->references('id')->on('public_places')->onUpdate('cascade');
+            $table->foreign('user_id', 'fk_adresses_users')->references('id')->on('users')->onUpdate('cascade');
         });
     }
 
