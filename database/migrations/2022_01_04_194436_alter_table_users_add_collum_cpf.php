@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableUsersAddCollumRegistrationAndCpf extends Migration
+class AlterTableUsersAddCollumCpf extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AlterTableUsersAddCollumRegistrationAndCpf extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('registration', 9)->after('profession');
-            $table->string('cpf', 11)->after('registration');
+            $table->string('cpf', 11)->after('profession');
         });
     }
 
@@ -28,7 +27,6 @@ class AlterTableUsersAddCollumRegistrationAndCpf extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('cpf');
-            $table->dropColumn('registration');
         });
     }
 }

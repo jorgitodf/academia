@@ -13,6 +13,30 @@ class Helpers
         return "{$ano}-{$mes}-01";
     }
 
+    public static function geraDataFimMatricula($model, $data, $idPlan)
+    {
+        $p = $model->where('id', $idPlan)->first();
+
+        $end_date = '';
+
+        switch ($p->plan) {
+            case 'Plano Mensal':
+                $end_date = date('Y-m-d', strtotime(Helpers::formataData($data). ' + 1 month'));
+                break;
+            case 'Plano Trimestral':
+                $end_date = date('Y-m-d', strtotime(Helpers::formataData($data). ' + 3 month'));
+                break;
+            case 'Plano Semestral':
+                $end_date = date('Y-m-d', strtotime(Helpers::formataData($data). ' + 6 month'));
+                break;
+            case 'Plano Anual':
+                $end_date = date('Y-m-d', strtotime(Helpers::formataData($data). ' + 12 month'));
+                break;
+        }
+
+        return $end_date;
+    }
+
     public static function limpaCPF($telefone)
     {
         return preg_replace("/[^0-9]/", "", $telefone);

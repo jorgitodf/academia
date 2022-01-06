@@ -53,6 +53,15 @@ class User extends Authenticatable
         return $this->hasOne(Adress::class);
     }
 
+    public function registrations()
+    {
+        return $this->hasOne(Registration::class);
+    }
+
+    public function physical_evaluation_form()
+    {
+        return $this->hasMany(PhysicalEvaluationForm::class);
+    }
 
     /* Mutators */
     public function setNameAttribute($value)

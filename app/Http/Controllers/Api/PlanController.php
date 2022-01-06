@@ -27,7 +27,7 @@ class PlanController extends Controller
             return response()->json($plan, 200);
         }
 
-		return response()->json(['error' => ['message' => 'Nenhum Plano Encontrado!']], 404);
+		return response()->json(['error' => ['message' => 'Nenhum Plano Encontrado!']], 400);
     }
 
     public function store(Request $request)
@@ -45,6 +45,27 @@ class PlanController extends Controller
             $data['active'] = 'Sim';
             $plan = $this->plan->create($data);
             return response()->json(['data' => ['msg' => 'Plano Cadastrado com Sucesso!']], 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+
+        $erros = $this->validationPlan->validatePlan($data, $this->plan, 'PUT');
+
+        if ($erros) {
+            return response()->json(['errors' => $erros], 400);
+        }
+
+        try {
+
+            $plan = $this->plan->findOrFail($id);
+            $plan->update($data);
+            return response()->json(['data' => ['msg' => 'Plano Atualizado com Sucesso!']], 200);
 
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);

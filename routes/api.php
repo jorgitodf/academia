@@ -29,6 +29,31 @@ Route::prefix('v1')->namespace('Api')->group(function() {
         Route::get('plans', 'PlanController@index')->name('plans');
         Route::post('plans', 'PlanController@store')->name('plans');
         Route::get('plans/{id}', 'PlanController@show')->name('plans');
+        Route::put('plans/{id}', 'PlanController@update')->name('plans');
+    });
+
+    Route::name('form-payment.')->group(function() {
+        Route::get('form-payment', 'FormPaymentController@index')->name('form-payment');
+        Route::post('form-payment', 'FormPaymentController@store')->name('form-payment');
+        Route::get('form-payment/{id}', 'FormPaymentController@show')->name('form-payment');
+    });
+
+    Route::name('registration.')->group(function() {
+        Route::get('registration', 'RegistrationController@index')->name('registration');
+        Route::post('registration', 'RegistrationController@store')->name('registration');
+        Route::get('registration/{id}', 'RegistrationController@show')->name('registration');
+    });
+
+    Route::name('physical-evaluation-form.')->group(function() {
+        Route::get('physical-evaluation-form', 'PhysicalEvaluationFormController@index')->name('physical-evaluation-form');
+        Route::post('physical-evaluation-form', 'PhysicalEvaluationFormController@store')->name('physical-evaluation-form');
+        Route::get('physical-evaluation-form/{id}', 'PhysicalEvaluationFormController@show')->name('physical-evaluation-form');
+    });
+
+    Route::name('training-sheets.')->group(function() {
+        Route::get('training-sheets', 'TrainingSheetsController@index')->name('training-sheets');
+        Route::post('training-sheets', 'TrainingSheetsController@store')->name('training-sheets');
+        Route::get('training-sheets/{id}', 'TrainingSheetsController@show')->name('training-sheets');
     });
 
 });

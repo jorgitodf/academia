@@ -44,7 +44,6 @@ class UserController extends Controller
 
         try {
 
-            $data['registration'] = mt_rand(10000,99999) . Helpers::getAno();
             $data['password'] = bcrypt($data['password']);
 
             $imagesUploaded = [];

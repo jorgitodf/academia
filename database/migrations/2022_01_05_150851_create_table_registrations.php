@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableUserPlans extends Migration
+class CreateTableRegistrations extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateTableUserPlans extends Migration
      */
     public function up()
     {
-        Schema::create('user_plans', function (Blueprint $table) {
+        Schema::create('registrations', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('registration', 9);
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->char('paid_out', 3)->nullable();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('plan_id');
             $table->unsignedInteger('form_payment_id');
-            $table->char('paid_out', 3)->nullable();
-            $table->date('stat_date');
-            $table->date('end_date');
             $table->timestamps();
 
             $table->foreign('user_id', 'fk_plans_users')->references('id')->on('users')->onUpdate('cascade');

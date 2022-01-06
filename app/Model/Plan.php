@@ -12,7 +12,10 @@ class Plan extends Model
         'plan', 'value', 'active'
     ];
 
-
+    public function registrations()
+    {
+        return $this->hasOne(Registration::class);
+    }
 
     /* Mutators */
     public function setPlanAttribute($value)
@@ -28,5 +31,10 @@ class Plan extends Model
     public function setActiveAttribute($value)
     {
         $this->attributes['active'] = trim(mb_convert_case($value, MB_CASE_TITLE, "UTF-8"));
+    }
+
+    public function getValueAttribute($value)
+    {
+        return Helpers::formatarMoedaEnPt($value);
     }
 }
