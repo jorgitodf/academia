@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(PhysicalEvaluationForm::class);
     }
 
+    public function training_sheets()
+    {
+        return $this->hasMany(TrainingSheets::class);
+    }
+
     /* Mutators */
     public function setNameAttribute($value)
     {

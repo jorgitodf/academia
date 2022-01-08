@@ -15,15 +15,15 @@ class CreateDayWeekTrainingExercisesTable extends Migration
     {
         Schema::create('day_week_training_exercises', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('exercises_id');
-            $table->unsignedInteger('day_week_trainings_id');
+            $table->unsignedInteger('exercise_id');
+            $table->unsignedInteger('day_week_training_id');
             $table->integer('series');
             $table->char('repetition', 16);
             $table->integer('charge');
             $table->timestamps();
 
-            $table->foreign('day_week_trainings_id', 'fk_day_week_training_exercises_day_week_trainings')->references('id')->on('day_week_trainings')->onUpdate('cascade');
-            $table->foreign('exercises_id', 'fk_day_week_training_exercises_exercises')->references('id')->on('exercises')->onUpdate('cascade');
+            $table->foreign('day_week_training_id', 'fk_day_week_training_exercises_day_week_trainings')->references('id')->on('day_week_trainings')->onUpdate('cascade');
+            $table->foreign('exercise_id', 'fk_day_week_training_exercises_exercises')->references('id')->on('exercises')->onUpdate('cascade');
         });
     }
 

@@ -56,4 +56,24 @@ Route::prefix('v1')->namespace('Api')->group(function() {
         Route::get('training-sheets/{id}', 'TrainingSheetsController@show')->name('training-sheets');
     });
 
+    Route::name('group-exercises.')->group(function() {
+        Route::get('group-exercises', 'GroupExerciseController@index')->name('group-exercisess');
+        Route::post('group-exercises', 'GroupExerciseController@store')->name('group-exercises');
+        Route::get('group-exercises/{id}', 'GroupExerciseController@show')->name('group-exercises');
+    });
+
+    Route::name('exercises.')->group(function() {
+        Route::get('exercises', 'ExerciseController@index')->name('exercisess');
+        Route::post('exercises', 'ExerciseController@store')->name('exercises');
+        Route::get('exercises/{id}', 'ExerciseController@show')->name('exercises');
+    });
+
+    Route::name('day-week-training.')->group(function() {
+        Route::get('day-week-training', 'DayWeekTrainingController@index')->name('day-week-training');
+        Route::post('day-week-training', 'DayWeekTrainingController@store')->name('day-week-training');
+        Route::post('day-week-exercise', 'DayWeekTrainingController@create')->name('day-week-exercise');
+        Route::get('day-week-training/{id}', 'DayWeekTrainingController@show')->name('day-week-training');
+    });
+
+
 });
