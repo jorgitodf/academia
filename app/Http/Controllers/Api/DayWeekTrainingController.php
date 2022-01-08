@@ -20,6 +20,18 @@ class DayWeekTrainingController extends Controller
         $this->validationDayWeekTraining = $validationDayWeekTraining;
     }
 
+    public function index()
+    {
+        $dayWeekTraining = $this->dayWeekTraining->with('exercises')->paginate('10');
+
+        if ($dayWeekTraining->count() > 0) {
+            return response()->json($dayWeekTraining, 200);
+        }
+
+		return response()->json(['error' => ['message' => 'Nenhuma Forma de Pagamento Encontrada!']], 404);
+    }
+
+
     public function store(Request $request)
     {
         $data = $request->all();

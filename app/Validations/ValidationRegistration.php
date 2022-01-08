@@ -12,10 +12,18 @@ class ValidationRegistration
     {
         $registration = null;
 
-        $user = $modelUser->where('id', $data['user_id'])->first();
+        try {
+            $user = $modelUser->where('id', $data['user_id'])->first();
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage(), 'code' => 500];
+        }
 
         if ($user !== null) {
-            $registration = $modelRegistration->where('user_id', $user->id)->first();
+            try {
+                $registration = $modelRegistration->where('user_id', $user->id)->first();
+            } catch (\Exception $e) {
+                return ['error' => $e->getMessage(), 'code' => 500];
+            }
         }
 
         if ($registration !== null && $action !== 'PUT') {
@@ -53,8 +61,6 @@ class ValidationRegistration
             }
 
         }
-
-
 
         return $this->erros;
     }

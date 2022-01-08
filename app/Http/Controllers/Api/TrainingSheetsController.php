@@ -39,9 +39,11 @@ class TrainingSheetsController extends Controller
 
         $erros = $this->validationTrainingSheet->validateTrainingSheet($data, $this->trainingSheet, $registration, null);
 
-        if ($erros && (isset($erros['code']) && $erros['code'] == 500)) {
+        if (count($erros) > 0 && isset($erros['code']) && $erros['code'] == 500) {
             return response()->json(['errors' => $erros], 500);
-        } else {
+        } 
+        
+        if (count($erros) > 0) {
             return response()->json(['errors' => $erros], 400);
         }
 

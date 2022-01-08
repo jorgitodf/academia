@@ -10,7 +10,11 @@ class ValidationPlan
 
     public function validatePlan($data, $model = null, $action = null)
     {
-        $plan = $model->where('plan', $data['plan'])->where('active', 'Sim')->first();
+        try {
+            $plan = $model->where('plan', $data['plan'])->where('active', 'Sim')->first();
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage(), 'code' => 500];
+        }
 
         if (!isset($data['plan']) || empty($data['plan'])) {
             $this->erros['error-plan'] = "Informe o Plano!";

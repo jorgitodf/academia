@@ -37,16 +37,15 @@ class ValidationTrainingSheet
             }
 
         }
-
         return $this->erros;
     }
 
-    public function validateIdFormPayment($id, $model)
+    public function validateIdTrainingSheet($id, $model)
     {
         $user = $model->where('id', $id)->first();
 
         if (!is_numeric($id) || $user === null) {
-            $this->erros['error-id'] = "Forma de Pagamento não Encontrada!";
+            $this->erros['error-id'] = "Ficha de Treinamento não Encontrada!";
         }
 
         return $this->erros;

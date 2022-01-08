@@ -10,8 +10,12 @@ class ValidationPhysicalEvaluationForm
 
     public function validatePhysicalEvaluationForm($data, $model = null, $registrationModel = null, $action = null)
     {
-        $physicalEvaluationForm = $model->where('user_id', $data['user_id'])->first();
-        $registration = $registrationModel->with('user')->where('user_id', $data['user_id'])->first();
+        try {
+            $physicalEvaluationForm = $model->where('user_id', $data['user_id'])->first();
+            $registration = $registrationModel->with('user')->where('user_id', $data['user_id'])->first();
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage(), 'code' => 500];
+        }
 
         if (!isset($data['user_id']) || empty($data['user_id'])) {
             $this->erros['error-users'] = "Informe o Aluno para criar o Formulário de Avaliação Física!";
@@ -126,12 +130,12 @@ class ValidationPhysicalEvaluationForm
         return $this->erros;
     }
 
-    public function validateIdFormPayment($id, $model)
+    public function validateIdPhysicalEvaluationForm($id, $model)
     {
         $user = $model->where('id', $id)->first();
 
         if (!is_numeric($id) || $user === null) {
-            $this->erros['error-id'] = "Forma de Pagamento não Encontrada!";
+            $this->erros['error-id'] = "Formulário de Avaliação Física não Encontrado!";
         }
 
         return $this->erros;

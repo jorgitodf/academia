@@ -10,7 +10,11 @@ class ValidationFormPayment
 
     public function validateFormPayment($data, $model = null, $action = null)
     {
-        $paymentMethod = $model->where('payment_method', $data['payment_method'])->first();
+        try {
+            $paymentMethod = $model->where('payment_method', $data['payment_method'])->first();
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage(), 'code' => 500];
+        }
 
         if (!isset($data['payment_method']) || empty($data['payment_method'])) {
             $this->erros['error-payment-method'] = "Informe a Forma de Pagamento!";

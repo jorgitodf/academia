@@ -10,8 +10,12 @@ class ValidationUser
 
     public function validateUser($data, $model = null, $action = null, $photo = null)
     {
-        $email = $model->where('email', $data['email'])->first();
-        $cpf = $model->where('cpf', Helpers::limpaCPF($data['cpf']))->first();
+        try {
+            $email = $model->where('email', $data['email'])->first();
+            $cpf = $model->where('cpf', Helpers::limpaCPF($data['cpf']))->first();
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage(), 'code' => 500];
+        }
 
         if (!isset($data['cpf']) || empty($data['cpf'])) {
             $this->erros['error-cpf'] = "Informe o CPF do Usuário!";
@@ -114,9 +118,6 @@ class ValidationUser
             }
 
         }
-
-
-
         return $this->erros;
     }
 
