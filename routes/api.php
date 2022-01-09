@@ -60,6 +60,7 @@ Route::prefix('v1')->namespace('Api')->group(function() {
         Route::get('group-exercises', 'GroupExerciseController@index')->name('group-exercisess');
         Route::post('group-exercises', 'GroupExerciseController@store')->name('group-exercises');
         Route::get('group-exercises/{id}', 'GroupExerciseController@show')->name('group-exercises');
+        Route::put('group-exercises/{id}', 'GroupExerciseController@update')->name('group-exercises');
     });
 
     Route::name('exercises.')->group(function() {

@@ -48,4 +48,43 @@ class GroupExerciseController extends Controller
             return response()->json($e->getMessage(), 400);
         }
     }
+
+    public function show($id)
+    {
+        $erros = $this->validationGroupExercise->validateIdGroupExercise($id, $this->groupExercise);
+
+        if ($erros) {
+            return response()->json(['errors' => $erros], 400);
+        }
+
+        try {
+
+            $groupExercise = $this->groupExercise->findOrFail($id);
+            return response()->json(['data' => $groupExercise], 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+
+        $erros = $this->validationGroupExercise->validateGroupExercise($data, $this->groupExercise, 'PUT', $id);
+
+        if ($erros) {
+            return response()->json(['errors' => $erros], 400);
+        }
+
+        try {
+
+            $groupExercise = $this->groupExercise->findOrFail($id);
+            $groupExercise->update($data);
+            return response()->json(['data' => ['msg' => 'Grupo de Exercício Atualizado com Sucesso!']], 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
 }

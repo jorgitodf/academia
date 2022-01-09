@@ -8,8 +8,15 @@ class ValidationGroupExercise
 {
     private $erros = [];
 
-    public function validateGroupExercise($data, $model = null, $action = null)
+    public function validateGroupExercise($data, $model = null, $action = null, $id = null)
     {
+        if ($id !== null) {
+            $groupExercise = $model->find($id);
+            if ($groupExercise === null || !is_numeric($id)) {
+                $this->erros['error-group-exercise'] = "Grupo de Exercício não Encontrado!";
+            }
+        }
+
         try {
             $groupExercise = $model->where('name', $data['name'])->first();
         } catch (\Exception $e) {
@@ -22,9 +29,7 @@ class ValidationGroupExercise
             $this->erros['error-name'] = "O Grupo de Exercício " . $groupExercise->name . " já existe!";
         } else {
 
-            if (!isset($data['name']) || empty($data['name'])) {
-                $this->erros['error-name'] = "Informe o Nome do Grupo de Exercício!";
-            } else if (preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $data['name'])) {
+            if (preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $data['name'])) {
                 $this->erros['error-name'] = "O Campo Nome do Grupo de Exercício não pode conter número(s)!";
             }
 
@@ -33,12 +38,12 @@ class ValidationGroupExercise
         return $this->erros;
     }
 
-    public function validateIdFormPayment($id, $model)
+    public function validateIdGroupExercise($id, $model)
     {
         $user = $model->where('id', $id)->first();
 
         if (!is_numeric($id) || $user === null) {
-            $this->erros['error-id'] = "Forma de Pagamento não Encontrada!";
+            $this->erros['error-id'] = "Grupo de Exercício não Encontrado!";
         }
 
         return $this->erros;
