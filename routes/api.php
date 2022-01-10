@@ -23,6 +23,7 @@ Route::prefix('v1')->namespace('Api')->group(function() {
         Route::get('users', 'UserController@index')->name('users');
         Route::post('users', 'UserController@store')->name('users');
         Route::get('users/{id}', 'UserController@show')->name('users');
+        Route::put('users/{id}', 'UserController@update')->name('users');
     });
 
     Route::name('plans.')->group(function() {
