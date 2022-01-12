@@ -8,12 +8,25 @@ class ValidationRegistration
 {
     private $erros = [];
 
-    public function validateRegistration($data, $modelUser = null, $modelRegistration = null, $action = null)
+    public function validateRegistration($data, $modelUser = null, $modelRegistration = null, $modelPlan = null, $action = null, $id = null)
     {
         $registration = null;
 
+        if ($id !== null) {
+            $registration = $modelRegistration->find($id);
+            if ($registration === null || !is_numeric($id)) {
+                $this->erros['error-registration'] = "Matrícula não Encontrada!";
+            }
+        }
+
         try {
             $user = $modelUser->where('id', $data['user_id'])->first();
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage(), 'code' => 500];
+        }
+
+        try {
+            $plan = $modelPlan->where('id', $data['plan_id'])->first();
         } catch (\Exception $e) {
             return ['error' => $e->getMessage(), 'code' => 500];
         }
@@ -50,8 +63,8 @@ class ValidationRegistration
 
             if (!isset($data['plan_id']) || empty($data['plan_id'])) {
                 $this->erros['error-plan'] = "Informe o Plano desejado para a Matricula!";
-            } else if (!is_numeric($data['plan_id'])) {
-                $this->erros['error-plan'] = "Plano desejado não Encontrado!";
+            } else if (!is_numeric($data['plan_id']) || $plan === null) {
+                $this->erros['error-plan'] = "Plano não Encontrado!";
             }
 
             if (!isset($data['form_payment_id']) || empty($data['form_payment_id'])) {

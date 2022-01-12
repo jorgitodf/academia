@@ -44,6 +44,7 @@ Route::prefix('v1')->namespace('Api')->group(function() {
         Route::get('registration', 'RegistrationController@index')->name('registration');
         Route::post('registration', 'RegistrationController@store')->name('registration');
         Route::get('registration/{id}', 'RegistrationController@show')->name('registration');
+        Route::put('registration/{id}', 'RegistrationController@update')->name('registration');
     });
 
     Route::name('physical-evaluation-form.')->group(function() {
