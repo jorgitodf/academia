@@ -34,7 +34,7 @@ class PlanController extends Controller
     {
         $data = $request->all();
 
-        $erros = $this->validationPlan->validatePlan($data, $this->plan, null);
+        $erros = $this->validationPlan->validatePlan($data, $this->plan, null, null);
 
         if ($erros) {
             return response()->json(['errors' => $erros], 400);
@@ -55,7 +55,7 @@ class PlanController extends Controller
     {
         $data = $request->all();
 
-        $erros = $this->validationPlan->validatePlan($data, $this->plan, 'PUT');
+        $erros = $this->validationPlan->validatePlan($data, $this->plan, 'PUT', $id);
 
         if ($erros) {
             return response()->json(['errors' => $erros], 400);
@@ -70,5 +70,25 @@ class PlanController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);
         }
+    }
+
+    public function show($id)
+    {
+        $erros = $this->validationPlan->validateIdPlan($id, $this->plan);
+
+        if ($erros) {
+            return response()->json(['errors' => $erros], 400);
+        }
+
+        try {
+
+            $plan = $this->plan->findOrFail($id);
+
+            return response()->json(['plan' => $plan], 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+
     }
 }

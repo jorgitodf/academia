@@ -34,7 +34,7 @@ class FormPaymentController extends Controller
     {
         $data = $request->all();
 
-        $erros = $this->validationFormPayment->validateFormPayment($data, $this->formPayment, null);
+        $erros = $this->validationFormPayment->validateFormPayment($data, $this->formPayment, null, null);
 
         if ($erros) {
             return response()->json(['errors' => $erros], 400);
@@ -48,5 +48,45 @@ class FormPaymentController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+
+        $erros = $this->validationFormPayment->validateFormPayment($data, $this->formPayment, 'PUT', $id);
+
+        if ($erros) {
+            return response()->json(['errors' => $erros], 400);
+        }
+
+        try {
+
+            $formPayment = $this->formPayment->findOrFail($id);
+            $formPayment->update($data);
+            return response()->json(['data' => ['msg' => 'Forma de Pagamento Atualizada com Sucesso!']], 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function show($id)
+    {
+        $erros = $this->validationFormPayment->validateIdFormPayment($id, $this->formPayment);
+
+        if ($erros) {
+            return response()->json(['errors' => $erros], 400);
+        }
+
+        try {
+
+            $formPayment = $this->formPayment->findOrFail($id);
+            return response()->json(['formPayment' => $formPayment], 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+
     }
 }

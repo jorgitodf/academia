@@ -36,7 +36,7 @@ class UserController extends Controller
         $data = $request->all();
         $photo = $request->file('photo');
 
-        $erros = $this->validationUser->validateUser($data, $this->user, null, $photo, null, null);
+        $erros = $this->validationUser->validateUser($data, $this->user, null, $photo, null);
 
         if ($erros) {
             return response()->json(['errors' => $erros], 400);
@@ -91,7 +91,7 @@ class UserController extends Controller
         $data = $request->all();
         $photo = $request->file('photo');
 
-        $erros = $this->validationUser->validateUser($data, $this->user, null, $photo, $id, 'PUT');
+        $erros = $this->validationUser->validateUser($data, $this->user, 'PUT', $photo, $id);
 
         if ($erros) {
             return response()->json(['errors' => $erros], 400);

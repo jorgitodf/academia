@@ -37,6 +37,7 @@ Route::prefix('v1')->namespace('Api')->group(function() {
         Route::get('form-payment', 'FormPaymentController@index')->name('form-payment');
         Route::post('form-payment', 'FormPaymentController@store')->name('form-payment');
         Route::get('form-payment/{id}', 'FormPaymentController@show')->name('form-payment');
+        Route::put('form-payment/{id}', 'FormPaymentController@update')->name('form-payment');
     });
 
     Route::name('registration.')->group(function() {

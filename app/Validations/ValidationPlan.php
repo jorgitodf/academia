@@ -8,8 +8,15 @@ class ValidationPlan
 {
     private $erros = [];
 
-    public function validatePlan($data, $model = null, $action = null)
+    public function validatePlan($data, $model = null, $action = null, $id = null)
     {
+        if ($id !== null) {
+            $plan = $model->find($id);
+            if ($plan === null || !is_numeric($id)) {
+                $this->erros['error-plan'] = "Plano não Encontrado!";
+            }
+        }
+
         try {
             $plan = $model->where('plan', $data['plan'])->where('active', 'Sim')->first();
         } catch (\Exception $e) {
@@ -36,7 +43,7 @@ class ValidationPlan
         $user = $model->where('id', $id)->first();
 
         if (!is_numeric($id) || $user === null) {
-            $this->erros['error-id'] = "Usuário não Encontrado!";
+            $this->erros['error-id'] = "Plano não Encontrado!";
         }
 
         return $this->erros;
