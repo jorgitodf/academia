@@ -9,6 +9,7 @@ use App\Model\User;
 use App\Model\Plan;
 use App\Validations\ValidationRegistration;
 use App\Helpers\Helpers;
+use App\Model\FormPayment;
 
 class RegistrationController extends Controller
 {
@@ -36,8 +37,10 @@ class RegistrationController extends Controller
     {
         $data = $request->all();
         $user = new User();
+        $plan = new Plan();
+        $formPayment = new FormPayment();
 
-        $erros = $this->validationRegistration->validateRegistration($data, $user, $this->registration, null);
+        $erros = $this->validationRegistration->validateRegistration($data, $user, $this->registration, $plan, $formPayment, null, null);
 
         if ($erros) {
             return response()->json(['errors' => $erros], 400);
@@ -48,7 +51,6 @@ class RegistrationController extends Controller
             $plan = new Plan();
             $data['registration'] = mt_rand(10000,99999) . Helpers::getAno();
             $data['end_date'] = Helpers::geraDataFimMatricula($plan, $data['start_date'], $data['plan_id']);
-
             $registration = $this->registration->create($data);
             return response()->json(['data' => ['msg' => 'Matríciula Realizada com Sucesso!']], 200);
 
