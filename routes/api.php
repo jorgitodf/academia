@@ -50,6 +50,7 @@ Route::prefix('v1')->namespace('Api')->group(function() {
         Route::get('physical-evaluation-form', 'PhysicalEvaluationFormController@index')->name('physical-evaluation-form');
         Route::post('physical-evaluation-form', 'PhysicalEvaluationFormController@store')->name('physical-evaluation-form');
         Route::get('physical-evaluation-form/{id}', 'PhysicalEvaluationFormController@show')->name('physical-evaluation-form');
+        Route::put('physical-evaluation-form/{id}', 'PhysicalEvaluationFormController@update')->name('physical-evaluation-form');
     });
 
     Route::name('training-sheets.')->group(function() {
