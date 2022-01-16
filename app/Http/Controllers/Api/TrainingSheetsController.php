@@ -8,6 +8,7 @@ use App\Model\TrainingSheets;
 use App\Model\Registration;
 use App\Validations\ValidationTrainingSheet;
 use App\Helpers\Helpers;
+use App\Model\User;
 
 class TrainingSheetsController extends Controller
 {
@@ -36,8 +37,9 @@ class TrainingSheetsController extends Controller
         $data = $request->all();
 
         $registration = new Registration();
+        $user = new User();
 
-        $erros = $this->validationTrainingSheet->validateTrainingSheet($data, $this->trainingSheet, $registration, null);
+        $erros = $this->validationTrainingSheet->validateTrainingSheet($data, $this->trainingSheet, $registration, $user, null);
 
         if (count($erros) > 0 && isset($erros['code']) && $erros['code'] == 500) {
             return response()->json(['errors' => $erros], 500);
