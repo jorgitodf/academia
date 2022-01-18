@@ -6,10 +6,11 @@ class ValidationDayWeekTraining
 {
     private $erros = [];
 
-    public function validateDayWeekTraining($data, $model = null, $action = null)
+    public function validateDayWeekTraining($data, $model = null, $trainingSheetModel = null)
     {
         try {
-            $dayWeekTraining = $model->where('day_week', $data['day_week'])->where('training_sheet_id', $data['training_sheet_id'])->first();
+            $dayWeekTraining = $model->where('day_week', $data['day_week'])->where('training_sheets_id', $data['training_sheets_id'])->first();
+            $trainingSheet = $trainingSheetModel->where('id', $data['training_sheets_id'])->first();
         } catch (\Exception $e) {
             return ['error' => $e->getMessage(), 'code' => 500];
         }
@@ -20,13 +21,15 @@ class ValidationDayWeekTraining
             $this->erros['error-day-week'] = "Informe o Dia do Treino!";
         } else if (!in_array($data['day_week'], $dias)) {
             $this->erros['error-day-week'] = "O Dia do Treino é inválido!";
-        } else if ($dayWeekTraining !== null && $action !== 'PUT') {
+        } else if ($trainingSheet === null) {
+            $this->erros['error-day-week'] = "Ficha de Treinamento não Localizada!";
+        } else if ($dayWeekTraining !== null) {
             $this->erros['error-day-week'] = "O treino para " . $dayWeekTraining->day_week . " já foi criado!";
         } else {
 
-            if (!isset($data['training_sheet_id']) || empty($data['training_sheet_id'])) {
+            if (!isset($data['training_sheets_id']) || empty($data['training_sheets_id'])) {
                 $this->erros['error-straining-sheet'] = "Informe a Ficha de Treinamento!";
-            } else if (!is_numeric($data['training_sheet_id'])) {
+            } else if (!is_numeric($data['training_sheets_id'])) {
                 $this->erros['error-straining-sheet'] = "Ficha de Treinamento não Localizada!";
             }
 

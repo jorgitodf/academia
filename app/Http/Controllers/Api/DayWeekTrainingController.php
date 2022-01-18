@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\DayWeekTraining;
 use App\Model\Exercise;
+use App\Model\TrainingSheets;
 use App\Validations\ValidationDayWeekTraining;
 
 
@@ -35,8 +36,9 @@ class DayWeekTrainingController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $trainingSheet = new TrainingSheets();
 
-        $erros = $this->validationDayWeekTraining->validateDayWeekTraining($data, $this->dayWeekTraining, null);
+        $erros = $this->validationDayWeekTraining->validateDayWeekTraining($data, $this->dayWeekTraining, $trainingSheet);
 
         if ($erros) {
             return response()->json(['errors' => $erros], 400);
