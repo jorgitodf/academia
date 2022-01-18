@@ -16,10 +16,10 @@ class CreateDayWeekTrainingsTable extends Migration
         Schema::create('day_week_trainings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('day_week', 16);
-            $table->unsignedInteger('training_sheet_id');
+            $table->unsignedInteger('training_sheets_id');
             $table->timestamps();
 
-            $table->foreign('training_sheet_id', 'fk_fk_day_week_training_training_sheets')->references('id')->on('training_sheets')->onUpdate('cascade');
+            $table->foreign('training_sheets_id', 'fk_day_week_training_training_sheets')->references('id')->on('training_sheets')->onUpdate('cascade');
         });
     }
 

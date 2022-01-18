@@ -58,6 +58,7 @@ Route::prefix('v1')->namespace('Api')->group(function() {
         Route::get('training-sheets', 'TrainingSheetsController@index')->name('training-sheets');
         Route::post('training-sheets', 'TrainingSheetsController@store')->name('training-sheets');
         Route::get('training-sheets/{id}', 'TrainingSheetsController@show')->name('training-sheets');
+        Route::put('training-sheets/{id}', 'TrainingSheetsController@update')->name('training-sheets');
     });
 
     Route::name('group-exercises.')->group(function() {

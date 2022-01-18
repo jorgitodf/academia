@@ -18,6 +18,8 @@ class ValidationPhysicalEvaluationForm
             return ['error' => $e->getMessage(), 'code' => 500];
         }
 
+        $pef = '';
+
         if ($id !== null) {
             try {
                 $pef = $model->where('id', $id)->first();

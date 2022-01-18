@@ -43,8 +43,8 @@ class TrainingSheetsController extends Controller
 
         if (count($erros) > 0 && isset($erros['code']) && $erros['code'] == 500) {
             return response()->json(['errors' => $erros], 500);
-        } 
-        
+        }
+
         if (count($erros) > 0) {
             return response()->json(['errors' => $erros], 400);
         }
@@ -55,6 +55,48 @@ class TrainingSheetsController extends Controller
             $data['active'] = 'Sim';
             $trainingSheet = $this->trainingSheet->create($data);
             return response()->json(['data' => ['msg' => 'Ficha de Treinamento do Aluno '.$trainingSheet->user->name.' Criada com Sucesso!']], 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+
+        $registration = new Registration();
+        $user = new User();
+
+        $erros = $this->validationTrainingSheet->validateTrainingSheet($data, $this->trainingSheet, $registration, $user, 'PUT', $id);
+
+        if ($erros) {
+            return response()->json(['errors' => $erros], 400);
+        }
+
+        try {
+
+            $trainingSheet = $this->trainingSheet->findOrFail($id);
+            $trainingSheet->update($data);
+            return response()->json(['data' => ['msg' => 'Ficha de Treinamento Atualizada com Sucesso!']], 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function show($id)
+    {
+        $erros = $this->validationTrainingSheet->validateIdTrainingSheet($id, $this->trainingSheet);
+
+        if ($erros) {
+            return response()->json(['errors' => $erros], 400);
+        }
+
+        try {
+
+            $trainingSheet = $this->trainingSheet->with('day_week_trainings')->with('user')->with('instructor')->findOrFail($id);
+            return response()->json(['training-sheet' => $trainingSheet], 200);
 
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);

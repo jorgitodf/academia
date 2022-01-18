@@ -9,7 +9,7 @@ class DayWeekTraining extends Model
 {
     protected $table = 'day_week_trainings';
     protected $fillable = [
-        'day_week', 'training_sheet_id'
+        'day_week', 'training_sheets_id'
     ];
 
     public function training_sheet()
