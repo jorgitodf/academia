@@ -56,9 +56,9 @@ class ValidationTrainingSheet
 
     public function validateIdTrainingSheet($id, $model)
     {
-        $user = $model->where('id', $id)->first();
+        $trainingSheet = $model->where('id', $id)->first();
 
-        if (!is_numeric($id) || $user === null) {
+        if (!is_numeric($id) || $trainingSheet === null) {
             $this->erros['error-id'] = "Ficha de Treinamento não Encontrada!";
         }
 

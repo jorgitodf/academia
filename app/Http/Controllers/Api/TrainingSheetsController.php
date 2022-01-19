@@ -8,6 +8,7 @@ use App\Model\TrainingSheets;
 use App\Model\Registration;
 use App\Validations\ValidationTrainingSheet;
 use App\Helpers\Helpers;
+use App\Model\DayWeekTraining;
 use App\Model\User;
 
 class TrainingSheetsController extends Controller
@@ -54,6 +55,7 @@ class TrainingSheetsController extends Controller
             $data['end_date'] = date('Y-m-d', strtotime(Helpers::formataData($data['start_date']). '+ 1 month'));
             $data['active'] = 'Sim';
             $trainingSheet = $this->trainingSheet->create($data);
+
             return response()->json(['data' => ['msg' => 'Ficha de Treinamento do Aluno '.$trainingSheet->user->name.' Criada com Sucesso!']], 200);
 
         } catch (\Exception $e) {
@@ -78,6 +80,7 @@ class TrainingSheetsController extends Controller
 
             $trainingSheet = $this->trainingSheet->findOrFail($id);
             $trainingSheet->update($data);
+
             return response()->json(['data' => ['msg' => 'Ficha de Treinamento Atualizada com Sucesso!']], 200);
 
         } catch (\Exception $e) {
@@ -95,8 +98,11 @@ class TrainingSheetsController extends Controller
 
         try {
 
-            $trainingSheet = $this->trainingSheet->with('day_week_trainings')->with('user')->with('instructor')->findOrFail($id);
-            return response()->json(['training-sheet' => $trainingSheet], 200);
+            $trainingSheet = $this->trainingSheet->with('user')->with('instructor')->findOrFail($id);
+            $dyt = New DayWeekTraining();
+            $dayWeekTraining = $dyt->with('exercises')->where('training_sheets_id', $id)->get();
+
+            return response()->json(['training-sheet' => $trainingSheet, 'exercises' => $dayWeekTraining], 200);
 
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);

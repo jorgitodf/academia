@@ -38,24 +38,31 @@ class ValidationDayWeekTraining
         return $this->erros;
     }
 
-    public function validateDayWeekExercises($data, $model = null, $action = null)
+    public function validateDayWeekExercises($data, $model = null, $exerciseModel = null)
     {
-        if (!isset($data['day_week_training_id']) || empty($data['day_week_training_id'])) {
-            return $this->erros['error-exercise'] = "Informe o Dia do Treino!";
-        } else if (is_numeric($data['day_week_training_id']) === false) {
-            return $this->erros['error-exercise'] = "Dia do Treino não Localizado!";
-        }
-
         try {
-            $dayWeekTraining = $model->with('exercises')->findOrFail($data['day_week_training_id']);
+            $dayWeekTraining = $model->with('exercises')->find($data['day_week_training_id']);
+            $exercise = $exerciseModel->where('id', $data['exercises'][0])->first();
         } catch (\Exception $e) {
             return ['error' => $e->getMessage(), 'code' => 500];
         }
 
-        if (!isset($data['exercises'][0]) || empty($data['exercises'][0])) {
+        if (!isset($data['day_week_training_id']) || empty($data['day_week_training_id'])) {
+            return $this->erros['error-exercise'] = "Informe o Dia do Treino!";
+        } else if ($dayWeekTraining === null || !is_numeric($data['day_week_training_id'])) {
+            return $this->erros['error-exercise'] = "Dia do Treino não Localizado!";
+        } else if (is_numeric($data['day_week_training_id']) === false) {
+            return $this->erros['error-exercise'] = "Dia do Treino não Localizado!";
+        } else if (!isset($data['exercises'][0]) || empty($data['exercises'][0])) {
             return $this->erros['error-exercise'] = "Informe o Exercício para o Treino!";
-        } else if (is_numeric($data['exercises'][0]) === false) {
+        } else if ($exercise === null || !is_numeric($data['exercises'][0])) {
             return $this->erros['error-exercise'] = "Exercício não Localizado!";
+        } else if ($data['treinos']['series'] === null | empty($data['treinos']['series'])) {
+            return $this->erros['error-exercise'] = "Informe a Quantidade de Série(s) do Exercício!";
+        } else if ($data['treinos']['repetition'] === null | empty($data['treinos']['repetition'])) {
+            return $this->erros['error-exercise'] = "Informe a Quantidade de Repetições do Exercício!";
+        } else if ($data['treinos']['charge'] === null | empty($data['treinos']['charge'])) {
+            return $this->erros['error-exercise'] = "Informe a Quantidade de Carga para o Exercício!";
         }
 
         $array[] = $dayWeekTraining->exercises;

@@ -63,8 +63,9 @@ class DayWeekTrainingController extends Controller
     public function create(Request $request)
     {
         $data = $request->all();
+        $exercise = new Exercise();
 
-        $erros = $this->validationDayWeekTraining->validateDayWeekExercises($data, $this->dayWeekTraining, null);
+        $erros = $this->validationDayWeekTraining->validateDayWeekExercises($data, $this->dayWeekTraining, $exercise);
 
         if ($erros) {
             return response()->json(['errors' => $erros], 400);

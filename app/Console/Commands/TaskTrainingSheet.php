@@ -43,16 +43,16 @@ class TaskTrainingSheet extends Command
 
         $diaAtual = date("Y-m-d");
 
-        
+
         foreach ($ts as $value) {
 
             if (strtotime($diaAtual) > strtotime($value['end_date'])) {
 
                 $t = $trainingSheet->findOrFail($value['id']);
                 $t->update(['active' => 'Não']);
-                
+
             }
-            
+
         }
     }
 }
