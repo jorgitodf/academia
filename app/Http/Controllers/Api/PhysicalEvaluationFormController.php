@@ -48,8 +48,9 @@ class PhysicalEvaluationFormController extends Controller
         try {
 
             $data['revaluation'] = date('Y-m-d', strtotime(Helpers::formataData($data['valuation']). ' + 3 month'));
+            $data['active'] = 'Sim';
             $physicalEvaluationForm = $this->physicalEvaluationForm->create($data);
-            return response()->json(['data' => ['msg' => 'Formulário de Avaliação Física Cadastrado com Sucesso!']], 200);
+            return response()->json(['data' => ['msg' => 'Formulário de Avaliação Física do Aluno '.$physicalEvaluationForm->user->name.' Cadastrado com Sucesso!']], 200);
 
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);

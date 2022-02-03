@@ -17,6 +17,7 @@ class CreatePhysicalEvaluationFormTable extends Migration
             $table->increments('id');
             $table->date('valuation');
             $table->date('revaluation');
+            $table->char('active', 3);
             $table->string('objective', 30);
             $table->string('activity', 30);
             $table->string('pathologies', 200);
@@ -24,7 +25,7 @@ class CreatePhysicalEvaluationFormTable extends Migration
             $table->string('controlled_medication', 200);
             $table->char('smoking', 3);
             $table->char('alcoholic_beverage', 3);
-            $table->integer('weight');
+            $table->float('weight');
             $table->double('height');
             $table->float('chest', 4, 2);
             $table->float('waist', 4, 2);

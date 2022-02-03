@@ -9,7 +9,7 @@ class PhysicalEvaluationForm extends Model
 {
     protected $table = 'physical_evaluation_form';
     protected $fillable = [
-        'valuation', 'revaluation', 'objective', 'activity', 'pathologies', 'injuries_surgeries', 'controlled_medication',
+        'valuation', 'revaluation', 'active', 'objective', 'activity', 'pathologies', 'injuries_surgeries', 'controlled_medication',
         'smoking', 'alcoholic_beverage', 'weight', 'height', 'chest', 'waist', 'left_arm', 'right_arm', 'left_leg', 'right_leg',
         'user_id', 'instructor_id'
     ];
